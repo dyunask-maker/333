@@ -1,28 +1,34 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Card</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Interactive Card</title>
 
 <style>
-
+*{box-sizing:border-box}
 body{
 margin:0;
-overflow:hidden;
 font-family:sans-serif;
-background:url("anh0.jpg");
-background-size:cover;
-background-position:center;
+overflow:hidden;
+background:url("anh0.jpg") center/cover no-repeat fixed;
+color:white;
 }
 
-/* container */
+/* page system */
 
-#page1{
+.page{
 position:absolute;
 width:100%;
 height:100%;
+top:0;
+left:0;
+display:none;
+}
+
+.page.active{
+display:block;
 }
 
 /* avatar */
@@ -39,8 +45,6 @@ z-index:2;
 transition:0.2s;
 }
 
-/* phong thu */
-
 #envelope{
 position:absolute;
 width:160px;
@@ -50,7 +54,7 @@ transform:translate(-50%,-50%);
 z-index:1;
 }
 
-/* 4 anh goc */
+/* corner images */
 
 .corner{
 position:absolute;
@@ -58,12 +62,13 @@ width:55px;
 height:55px;
 background:white;
 border-radius:8px;
+object-fit:cover;
 }
 
-#c1{top:20px;left:20px;}
-#c2{top:20px;right:20px;}
-#c3{bottom:20px;left:20px;}
-#c4{bottom:20px;right:20px;}
+#c1{top:20px;left:20px}
+#c2{top:20px;right:20px}
+#c3{bottom:20px;left:20px}
+#c4{bottom:20px;right:20px}
 
 /* text */
 
@@ -72,33 +77,113 @@ position:absolute;
 width:80%;
 left:50%;
 transform:translateX(-50%);
-bottom:120px;
-color:white;
-font-size:18px;
+bottom:140px;
 text-align:center;
+font-size:18px;
 opacity:0;
 transition:0.5s;
 }
 
-/* hoa */
+/* rain icons */
+
+.rain{
+position:absolute;
+font-size:26px;
+animation:fall 2s linear forwards;
+}
+
+@keyframes fall{
+0%{transform:translateY(-50px);opacity:1}
+100%{transform:translateY(100vh);opacity:0}
+}
+
+/* boxes */
+
+.box{
+width:90px;
+height:90px;
+background:#ff4d6d;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:absolute;
+}
+
+.box img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:none;
+border-radius:10px;
+}
+
+/* gift triangle */
+
+.tri1{bottom:160px;left:30%}
+.tri2{bottom:160px;right:30%}
+.tri3{bottom:70px;left:50%;transform:translateX(-50%)}
+
+/* easter egg */
+
+#egg{
+position:absolute;
+width:35px;
+height:35px;
+bottom:15px;
+right:15px;
+background:gold;
+border-radius:50%;
+}
+
+/* next */
+
+#next{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+font-size:28px;
+}
+
+/* credit */
+
+#credit{
+position:absolute;
+bottom:-100%;
+width:100%;
+text-align:center;
+font-size:18px;
+animation:credit 12s linear forwards;
+}
+
+@keyframes credit{
+from{bottom:-100%}
+to{bottom:110%}
+}
+
+/* flower shake */
 
 .flower{
 position:absolute;
 font-size:24px;
-animation:fall 3s linear forwards;
+animation:flowerfall 3s linear forwards;
 }
 
-@keyframes fall{
-0%{transform:translateY(-50px);opacity:1;}
-100%{transform:translateY(100vh);opacity:0;}
+@keyframes flowerfall{
+0%{transform:translateY(-50px)}
+100%{transform:translateY(100vh)}
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div id="page1">
+<!-- PAGE 1 -->
+
+<div class="page active" id="page1">
 
 <img id="envelope" src="phongthu.png">
 <img id="avatar" src="avatar.jpg">
@@ -114,51 +199,171 @@ animation:fall 3s linear forwards;
 
 </div>
 
+<!-- PAGE 2 -->
+
+<div class="page" id="page2">
+
+<div class="box" style="top:40px;left:50%;transform:translateX(-50%);width:240px;height:60px">
+vanban4
+</div>
+
+<div class="box" style="bottom:120px;left:25%">
+<img src="anhnho5.jpg">
+</div>
+
+<div class="box" style="bottom:120px;right:25%">
+<img src="anhnho6.jpg">
+</div>
+
+</div>
+
+<!-- PAGE 3 -->
+
+<div class="page" id="page3">
+
+<div style="text-align:center;margin-top:80px">vanban5</div>
+
+<img src="anhnho7.jpg" style="width:70%;display:block;margin:20px auto">
+
+</div>
+
+<!-- PAGE 4 -->
+
+<div class="page" id="page4">
+
+<div style="text-align:center;margin-top:80px">vanban6</div>
+
+<img src="anhnho8.jpg" style="width:70%;display:block;margin:20px auto">
+
+</div>
+
+<!-- PAGE 5 gifts -->
+
+<div class="page" id="page5">
+
+<div class="box tri1"><img src="anhnho9.jpg"></div>
+<div class="box tri2"><img src="anhnho10.jpg"></div>
+<div class="box tri3"><img src="anhnho11.jpg"></div>
+
+<div id="egg"></div>
+
+<div id="next">➡</div>
+
+</div>
+
+<!-- PAGE 6 -->
+
+<div class="page" id="page6">
+
+<img src="anhnho12.jpg" style="width:40%;position:absolute;right:10%;top:40%;opacity:0" id="img12">
+
+<div style="position:absolute;left:10%;top:40%;width:40%;opacity:0" id="text12">
+vanban7
+</div>
+
+</div>
+
+<!-- PAGE 7 -->
+
+<div class="page" id="page7">
+
+<div id="credit">
+<p>vanban credit 1</p>
+<p>vanban credit 2</p>
+<p>vanban credit 3</p>
+</div>
+
+</div>
+
 <script>
 
-/* TRIGGER 1 avatar pop */
+/* avatar pop */
 
-let avatar=document.getElementById("avatar")
-
-avatar.onclick=function(){
-
-avatar.style.transform="translate(-50%,-50%) scale(1.25)"
-
-setTimeout(()=>{
-avatar.style.transform="translate(-50%,-50%) scale(1)"
-},200)
-
+avatar.onclick=()=>{
+avatar.style.transform="translate(-50%,-50%) scale(1.3)"
+setTimeout(()=>avatar.style.transform="translate(-50%,-50%) scale(1)",200)
 }
 
-/* TRIGGER 2-3-4 swipe up text */
+/* swipe */
 
-let startY=0
+let startX,startY
 let step=0
 
 document.addEventListener("touchstart",e=>{
+startX=e.touches[0].clientX
 startY=e.touches[0].clientY
 })
 
 document.addEventListener("touchend",e=>{
 
-let endY=e.changedTouches[0].clientY
+let dx=e.changedTouches[0].clientX-startX
+let dy=e.changedTouches[0].clientY-startY
 
-if(startY-endY>80){
+/* swipe up */
+
+if(dy<-70){
 
 step++
 
-if(step==1)document.getElementById("t1").style.opacity=1
-if(step==2)document.getElementById("t2").style.opacity=1
-if(step==3)document.getElementById("t3").style.opacity=1
+if(step==1)t1.style.opacity=1
+else if(step==2)t2.style.opacity=1
+else if(step==3)t3.style.opacity=1
+else if(step==4){
+rainIcons()
+setTimeout(()=>changePage("page2"),2000)
+}
+
+}
+
+/* swipe right */
+
+if(dx>70){
+
+let p=document.querySelector(".page.active").id
+
+if(p=="page3")changePage("page4")
+else if(p=="page4")changePage("page5")
+else if(p=="page6")changePage("page7")
 
 }
 
 })
 
-/* TRIGGER rung dien thoai hoa roi */
+/* rain */
+
+function rainIcons(){
+
+let icons=["❤️","💙","💖","🔥","🌹","🌷","🎆"]
+
+for(let i=0;i<40;i++){
+
+let r=document.createElement("div")
+
+r.className="rain"
+r.innerHTML=icons[Math.floor(Math.random()*icons.length)]
+
+r.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(r)
+
+setTimeout(()=>r.remove(),2000)
+
+}
+
+}
+
+/* change page */
+
+function changePage(id){
+
+document.querySelector(".page.active").classList.remove("active")
+document.getElementById(id).classList.add("active")
+
+}
+
+/* shake flowers */
 
 let lastX,lastY,lastZ
-let shake=0
 
 window.addEventListener("devicemotion",e=>{
 
@@ -175,7 +380,18 @@ let diff=Math.abs(a.x+a.y+a.z-lastX-lastY-lastZ)
 
 if(diff>25){
 
-createFlowers()
+for(let i=0;i<8;i++){
+
+let f=document.createElement("div")
+f.className="flower"
+f.innerHTML="🌸"
+f.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(f)
+
+setTimeout(()=>f.remove(),3000)
+
+}
 
 }
 
@@ -184,28 +400,6 @@ lastY=a.y
 lastZ=a.z
 
 })
-
-function createFlowers(){
-
-for(let i=0;i<10;i++){
-
-let f=document.createElement("div")
-
-let icons=["🌸","🌹","🌷","🌺","💐"]
-
-f.innerHTML=icons[Math.floor(Math.random()*icons.length)]
-
-f.className="flower"
-
-f.style.left=Math.random()*100+"vw"
-
-document.body.appendChild(f)
-
-setTimeout(()=>{f.remove()},3000)
-
-}
-
-}
 
 </script>
 
