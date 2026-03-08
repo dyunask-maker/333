@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Card</title>
+
+<style>
+
+body{
+margin:0;
+overflow:hidden;
+font-family:sans-serif;
+background:url("anh0.jpg");
+background-size:cover;
+background-position:center;
+}
+
+/* container */
+
+#page1{
+position:absolute;
+width:100%;
+height:100%;
+}
+
+/* avatar */
+
+#avatar{
+position:absolute;
+width:90px;
+height:90px;
+border-radius:50%;
+top:45%;
+left:50%;
+transform:translate(-50%,-50%);
+z-index:2;
+transition:0.2s;
+}
+
+/* phong thu */
+
+#envelope{
+position:absolute;
+width:160px;
+top:46%;
+left:50%;
+transform:translate(-50%,-50%);
+z-index:1;
+}
+
+/* 4 anh goc */
+
+.corner{
+position:absolute;
+width:55px;
+height:55px;
+background:white;
+border-radius:8px;
+}
+
+#c1{top:20px;left:20px;}
+#c2{top:20px;right:20px;}
+#c3{bottom:20px;left:20px;}
+#c4{bottom:20px;right:20px;}
+
+/* text */
+
+.text{
+position:absolute;
+width:80%;
+left:50%;
+transform:translateX(-50%);
+bottom:120px;
+color:white;
+font-size:18px;
+text-align:center;
+opacity:0;
+transition:0.5s;
+}
+
+/* hoa */
+
+.flower{
+position:absolute;
+font-size:24px;
+animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+0%{transform:translateY(-50px);opacity:1;}
+100%{transform:translateY(100vh);opacity:0;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="page1">
+
+<img id="envelope" src="phongthu.png">
+<img id="avatar" src="avatar.jpg">
+
+<img class="corner" id="c1" src="anhnho1.jpg">
+<img class="corner" id="c2" src="anhnho2.jpg">
+<img class="corner" id="c3" src="anhnho3.jpg">
+<img class="corner" id="c4" src="anhnho4.jpg">
+
+<div class="text" id="t1">vanban1</div>
+<div class="text" id="t2">vanban2</div>
+<div class="text" id="t3">vanban3</div>
+
+</div>
+
+<script>
+
+/* TRIGGER 1 avatar pop */
+
+let avatar=document.getElementById("avatar")
+
+avatar.onclick=function(){
+
+avatar.style.transform="translate(-50%,-50%) scale(1.25)"
+
+setTimeout(()=>{
+avatar.style.transform="translate(-50%,-50%) scale(1)"
+},200)
+
+}
+
+/* TRIGGER 2-3-4 swipe up text */
+
+let startY=0
+let step=0
+
+document.addEventListener("touchstart",e=>{
+startY=e.touches[0].clientY
+})
+
+document.addEventListener("touchend",e=>{
+
+let endY=e.changedTouches[0].clientY
+
+if(startY-endY>80){
+
+step++
+
+if(step==1)document.getElementById("t1").style.opacity=1
+if(step==2)document.getElementById("t2").style.opacity=1
+if(step==3)document.getElementById("t3").style.opacity=1
+
+}
+
+})
+
+/* TRIGGER rung dien thoai hoa roi */
+
+let lastX,lastY,lastZ
+let shake=0
+
+window.addEventListener("devicemotion",e=>{
+
+let a=e.accelerationIncludingGravity
+
+if(!lastX){
+lastX=a.x
+lastY=a.y
+lastZ=a.z
+return
+}
+
+let diff=Math.abs(a.x+a.y+a.z-lastX-lastY-lastZ)
+
+if(diff>25){
+
+createFlowers()
+
+}
+
+lastX=a.x
+lastY=a.y
+lastZ=a.z
+
+})
+
+function createFlowers(){
+
+for(let i=0;i<10;i++){
+
+let f=document.createElement("div")
+
+let icons=["🌸","🌹","🌷","🌺","💐"]
+
+f.innerHTML=icons[Math.floor(Math.random()*icons.length)]
+
+f.className="flower"
+
+f.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(f)
+
+setTimeout(()=>{f.remove()},3000)
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
